@@ -1,23 +1,11 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
-import { FlickeringGrid } from "@/components/ui/flickeringBackground";
+import { useState, useEffect } from "react";
 import { ReactTyped } from "react-typed";
 
 export default function Hero() {
 	const [dimensions, setDimensions] = useState({ height: 2000, width: 2000 });
-
-	useEffect(() => {
-		// Small delay to ensure component is fully rendered
-		const timer = setTimeout(() => {
-			const cursor = document.querySelector(".typed-cursor");
-			if (cursor) {
-				cursor.classList.add("hidden");
-			}
-		}, 3000); // Adjust time as needed to hide cursor after typing completes
-
-		return () => clearTimeout(timer);
-	}, []);
+	const [showContent, setShowContent] = useState(false);
 
 	useEffect(() => {
 		setDimensions({
@@ -36,34 +24,90 @@ export default function Hero() {
 		return () => window.removeEventListener("resize", handleResize);
 	}, []);
 
+	const handleTypingComplete = () => {
+		setTimeout(() => {
+			const cursor = document.querySelector(
+				".typed-cursor"
+			) as HTMLElement;
+			if (cursor) cursor.style.display = "none";
+
+			// Reveal profile content after a small delay
+			setTimeout(() => setShowContent(true), 300);
+		}, 100);
+	};
+
 	return (
-		<div className="min-h-screen w-full overflow-hidden rounded-lg bg-background relative">
-			<FlickeringGrid
-				className="fixed inset-0 z-0 [mask-image:radial-gradient(1000px_circle_at_center,white,transparent)]"
-				squareSize={4}
-				gridGap={6}
-				color="#9fff99"
-				maxOpacity={0.5}
-				flickerChance={0.1}
-				height={dimensions.height}
-				width={dimensions.width}
-			/>
-			<div className="text-md font-jetbrains h-screen w-full flex items-center z-10 relative">
-				{/* Adjusted alignment */}
-				<div className="max-w-lg w-full text-left px-8 ml-10">
-					<div className="typed-cursor-wrapper whitespace-nowrap">
-						<span className="text-white">abh1shek@abh1shek</span>
-						<span className="text-white">:~$</span>
-						<span className="ml-2">
-							<ReactTyped
-								strings={["fastfetch"]}
-								typeSpeed={80}
-								backSpeed={100}
-								cursorChar="█"
-								showCursor={true}
-							/>
+		<div className="min-h-screen w-full overflow-hidden rounded-lg relative bg-neutral-900 text-white flex justify-center items-center">
+			<div className="text-sm font-jetbrains h-screen w-full -translate-x-12 flex flex-col items-center justify-center z-10 relative">
+				<div className="min-w-[800px] px-16 text-left">
+					{/* Command Line Effect */}
+					<div className="typed-cursor-wrapper whitespace-nowrap mb-6">
+						<span className="text-green-500">
+							→ [ethereal@abh1shek ~]${" "}
 						</span>
+						<ReactTyped
+							strings={[" fastfetch"]}
+							typeSpeed={80}
+							backSpeed={100}
+							cursorChar="█"
+							showCursor={true}
+							onComplete={handleTypingComplete}
+						/>
 					</div>
+
+					{/* Main Content (Hidden Initially, Fades In) */}
+					{showContent && (
+						<div className="flex flex-row items-center gap-20 p-6 rounded-lg shadow-lg w-fit opacity-0 animate-fadeIn">
+							<div className="flex-shrink-0">
+								<img
+									src="./profile.png"
+									width={270}
+									height={270}
+									alt="Profile"
+									className="rounded-lg"
+								/>
+							</div>
+
+							{/* Information Section */}
+							<div className="text-sm translate-x-10">
+								<p className="text-green-500 font-bold">
+									Hi, I'm Abhishek	
+								</p>
+								<p>-----------------</p>
+								<p>OS: Developer (Next.js, Phaser.js)</p>
+								<p>Interests: Web3, Metaverse, Rust</p>
+								<p>Current Project: Rusted Souls (Game)</p>
+								<p>Learning: Rust, GraphQL, Shopify Apps</p>
+								<p>
+									GitHub:{" "}
+									<a
+										href="https://github.com/kazehaya-ctrl"
+										className="text-blue-400 hover:underline"
+									>
+										github.com/kazehaya-ctrl
+									</a>
+								</p>
+								<p>
+									Email:{" "}
+									<span className="text-blue-400">
+										abhishek@wiranium.com
+									</span>
+								</p>
+								<p>
+									Twitter:{" "}
+									<a
+										href="https://twitter.com/abhishekRj_"
+										className="text-blue-400 hover:underline"
+									>
+										@abhishekRj_
+									</a>
+								</p>
+								<p>CPU: AMD Ryzen 9 5900HX</p>
+								<p>GPU: Radeon Graphics</p>
+								<p>Motto: "Break, Build, Innovate"</p>
+							</div>
+						</div>
+					)}
 				</div>
 			</div>
 
@@ -71,9 +115,6 @@ export default function Hero() {
 				.typed-cursor {
 					opacity: 1;
 					animation: blink 1s infinite;
-				}
-				.hidden {
-					display: none !important;
 				}
 				@keyframes blink {
 					0%,
@@ -83,6 +124,19 @@ export default function Hero() {
 					50% {
 						opacity: 0;
 					}
+				}
+				@keyframes fadeIn {
+					from {
+						opacity: 0;
+						transform: translateY(10px);
+					}
+					to {
+						opacity: 1;
+						transform: translateY(0);
+					}
+				}
+				.animate-fadeIn {
+					animation: fadeIn 0.5s ease-out forwards;
 				}
 			`}</style>
 		</div>
