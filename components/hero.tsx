@@ -70,14 +70,13 @@ export default function Hero() {
 
 							{/* Information Section */}
 							<div className="text-sm translate-x-10">
-								<p className="text-green-500 font-bold">
-									Hi, I'm Abhishek	
+								<p className="text-green-600 font-bold">
+									Hi, I'm Abhishek
 								</p>
 								<p>-----------------</p>
-								<p>OS: Developer (Next.js, Phaser.js)</p>
-								<p>Interests: Web3, Metaverse, Rust</p>
+								<p>Developer (OpenSource, Game, Web)</p>
 								<p>Current Project: Rusted Souls (Game)</p>
-								<p>Learning: Rust, GraphQL, Shopify Apps</p>
+								<p>Learning: Rust, Kubernetes, Remix</p>
 								<p>
 									GitHub:{" "}
 									<a
@@ -102,9 +101,9 @@ export default function Hero() {
 										@abhishekRj_
 									</a>
 								</p>
-								<p>CPU: AMD Ryzen 9 5900HX</p>
+								<p>CPU: </p>
 								<p>GPU: Radeon Graphics</p>
-								<p>Motto: "Break, Build, Innovate"</p>
+								<p>Motto: "Just Create"</p>
 							</div>
 						</div>
 					)}
